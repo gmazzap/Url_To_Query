@@ -161,7 +161,7 @@ class UrlToQueryItem {
     private function parseUrl( $url = '', Array $query_string_vars = [ ] ) {
         parse_str( parse_url( $url, PHP_URL_QUERY ), $this->query_string );
         $request_uri = trim( parse_url( $url, PHP_URL_PATH ), '/' );
-        $this->request = preg_replace( '#^/*index\.php.*$#', '', $request_uri );
+        $this->request = trim( preg_replace( '#^/*index\.php#', '', $request_uri ), '/' );
         if ( ! empty( $query_string_vars ) ) {
             $this->query_string = array_merge( $this->query_string, $query_string_vars );
         }
