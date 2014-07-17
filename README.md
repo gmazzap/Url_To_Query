@@ -25,7 +25,7 @@ main query arguments.
     $args = url_to_query( 'http://example.com/sample-page' );
     // $args = array(  'pagename' => 'sample-page' );
     
-    $args = uurl_to_query( 'http://example.com/category/uncategorized/' )
+    $args = url_to_query( 'http://example.com/category/uncategorized/' )
     // $args = array(  'category_name' => 'uncategorized' );
     
 It is also possible to pass a relative url:
