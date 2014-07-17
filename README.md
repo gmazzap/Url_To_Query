@@ -15,7 +15,7 @@ Using that method for the purpose explained above is hard/discouraged because:
  * it triggers some action hooks strictly related to current HTTP request parsing, that makes no sense to trigger for arbitrary urls
  * it accesses and modifies properties of global `$wp` variable that should not be changed after request is parsed or very likely *things* will break
  
-This is the reason why I wrote this simple plugin, it adds a temlate tag **`url_to_query`** that accepts an url and returns related main query arguments.
+This is the reason why I wrote this simple plugin, it adds a template tag **`url_to_query`** that accepts an url and returns related main query arguments.
 
 ##How to use##
 
@@ -86,7 +86,7 @@ it is possible directly use them, instead of the template tag. Indeed, only one 
     $args = $resolver->resolve( 'http://example.com/sample-page', array( 'page' => '2' ) );
     // $args = array( 'pagename' => 'sample-page', 'page' => '2' );
     
-So `resolve()` method of `GM\UrlToQuery` works exacly in the same way `url_to_query` function does.
+So `resolve()` method of `GM\UrlToQuery` works exactly in the same way `url_to_query` function does.
 
 The same instance of `GM\UrlToQuery` can be used to resolve different urls:
 
