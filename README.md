@@ -1,24 +1,21 @@
 Url To Query
 ============
 
-A WordPress plugin that convert any kind of WordPress url (even custom rewrite rules) to related main query arguments.
+A WordPress plugin that allow resolving any kind of WordPress url (even from custom rewrite rules) to related main query arguments.
 
 **Require PHP 5.4+**
 
 WP comes with a set of tools to convert custom urls into specific query variables:
-is possible to change the [permalink structure](http://codex.wordpress.org/Using_Permalinks#Choosing_your_permalink_structure),
-there is  also an [API](http://codex.wordpress.org/Rewrite_API/add_rewrite_rule) to add completely custom rules,
-however, there is **not** a way to *reverse* the process: i.e. to know to which query arguments an arbitrary url is connected to.
+is possible to change the [permalink structure](http://codex.wordpress.org/Using_Permalinks#Choosing_your_permalink_structure), and there is also an [API](http://codex.wordpress.org/Rewrite_API/add_rewrite_rule) to add completely custom rules, however, there is **not** a way to *reverse* the process: i.e. to know to which query arguments an arbitrary url is connected to.
 
-The url *resolving* is done in core by  `parse_request` method of `WP` class saved in the global `$wp` variable.
+The url *resolving* is done in core by [`parse_request`](https://github.com/WordPress/WordPress/blob/71eb75a1599be8b456b2040f7ac2235c0e6b217e/wp-includes/class-wp.php#L120) method of `WP` class saved in the global `$wp` variable.
 
 Using that method for the purpose explained above is hard/discouraged because:
  * it directly accesses to `$_SERVER`, `$_POST` and `$_GET` variables, making hard to parse arbitrary urls not related with current HTTP request
  * it triggers some action hooks strictly related to current HTTP request parsing, that makes no sense to trigger for arbitrary urls
  * it accesses and modifies properties of global `$wp` variable that should not be changed after request is parsed or very likely *things* will break
  
-This is the reason why I wrote this simple plugin, it adds a temlate tag **`url_to_query`** that accepts an url and returns related
-main query arguments.
+This is the reason why I wrote this simple plugin, it adds a temlate tag **`url_to_query`** that accepts an url and returns related main query arguments.
 
 ##How to use##
 
@@ -41,14 +38,13 @@ urls to set query arguments. The plugin works perfectly with them:
     $args = url_to_query( '/?attachment_id=880' );
     // $args = array(  'attachment_id' => '880' );
     
-To even simplify this task, `url_to_query` accepts a second argument: an array of query vars to be considered
-is the same way core considers `$_REQUEST` variables when an url is parsed:
+To simplify this task, `url_to_query` accepts a second argument: an array of query vars to be considered
+in the same way core considers `$_REQUEST` variables when an url is parsed:
 
     $args = url_to_query( '/', array( 'attachment_id' => '880' ) );
     // $args = array(  'attachment_id' => '880' );
     
-Note that the array passed as second argument is not straight merged to the query vars, only valid query vars will be used,
-just like core does when parse urls:
+Note that the array passed as second argument is not straight merged to the query vars, only valid query vars will be used, just like core does when parse urls:
 
     $args = url_to_query( '/', array( 'attachment_id' => '880', 'foo' => 'bar' ) );
     // $args = array(  'attachment_id' => '880' );
