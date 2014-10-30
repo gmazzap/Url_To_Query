@@ -14,7 +14,7 @@ A WordPress plugin that allow resolving any kind of WordPress url (even from cus
 The plugin is a Composer package and can be installed in plugin directory via:
 
 ``` bash
-composer create-project gmazzap/gmazzap/url-to-query --no-dev
+composer create-project gmazzap/url-to-query --no-dev
 ```
 
 ## What & Why
