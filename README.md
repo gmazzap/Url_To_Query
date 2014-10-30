@@ -14,22 +14,22 @@ Using that method for the purpose explained above is hard/discouraged because:
  * it directly accesses to `$_SERVER`, `$_POST` and `$_GET` variables, making hard to parse arbitrary urls not related with current HTTP request
  * it triggers some action hooks strictly related to current HTTP request parsing, that makes no sense to trigger for arbitrary urls
  * it accesses and modifies properties of global `$wp` variable that should not be changed after request is parsed or very likely *things* will break
- 
+
 This is the reason why I wrote this simple plugin, it adds a template tag **`url_to_query`** that accepts an url and returns related main query arguments.
 
 ##How to use##
 
     $args = url_to_query( 'http://example.com/sample-page' );
     // $args = array(  'pagename' => 'sample-page' );
-    
+
     $args = url_to_query( 'http://example.com/category/uncategorized/' )
     // $args = array(  'category_name' => 'uncategorized' );
-    
+
 It is also possible to pass a relative url:
 
     $args = url_to_query( '/sample-page' );
     // $args = array(  'pagename' => 'sample-page' );
-    
+
 ###Using query string###
 
 When pretty permalinks are not used, (sometimes even in that case) WordPress can make use of query string in the
@@ -37,18 +37,18 @@ urls to set query arguments. The plugin works perfectly with them:
 
     $args = url_to_query( '/?attachment_id=880' );
     // $args = array(  'attachment_id' => '880' );
-    
+
 To simplify this task, `url_to_query` accepts a second argument: an array of query vars to be considered
 in the same way core considers `$_REQUEST` variables when an url is parsed:
 
     $args = url_to_query( '/', array( 'attachment_id' => '880' ) );
     // $args = array(  'attachment_id' => '880' );
-    
+
 Note that the array passed as second argument is not straight merged to the query vars, only valid query vars will be used, just like core does when parse urls:
 
     $args = url_to_query( '/', array( 'attachment_id' => '880', 'foo' => 'bar' ) );
     // $args = array(  'attachment_id' => '880' );
-    
+
 ###Custom rewrite rules###
 
 Plugin works with no problems with custom rewrite rules, just few things to consider:
@@ -85,27 +85,32 @@ it is possible directly use them, instead of the template tag. Indeed, only one 
     $resolver = new GM\UrlToQuery();
     $args = $resolver->resolve( 'http://example.com/sample-page', array( 'page' => '2' ) );
     // $args = array( 'pagename' => 'sample-page', 'page' => '2' );
-    
+
 So `resolve()` method of `GM\UrlToQuery` works exactly in the same way `url_to_query` function does.
 
 The same instance of `GM\UrlToQuery` can be used to resolve different urls:
 
     $resolver = new GM\UrlToQuery();
-    
+
     $args1 = $resolver->resolve( 'http://example.com/sample-page', array( 'page' => '2' ) );
     // $args1 = array( 'pagename' => 'sample-page', 'page' => '2' );
-    
+
     $args2 = $resolver->resolve( '/?attachment_id=880' );
     // $args2 = array( 'attachment_id' => '880' );
-    
+
     $args3 = $resolver->resolve( 'http://example.com/category/uncategorized/' );
     // $args3 = array( 'category_name' => 'uncategorized' );
 
 
+================
+
+# License
+
+Url_To_Query is released under MIT.
 
 
 
 
 
 
-    
+
