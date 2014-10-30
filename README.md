@@ -98,8 +98,8 @@ function my_rew_rules() {
 }
 
 add_action( 'footer' function() {
-  $args = url_to_query( '/nutrition/milkshakes/strawberry/' )
-  // $args = array( 'page_id' => '12', 'food' => 'milkshakes', 'variety' => 'strawberry' );
+  $args = url_to_query( '/nutrition/cake/cherry/' )
+  // $args = array( 'page_id' => '12', 'food' => 'cake', 'variety' => 'cherry' );
 } );
 ```
 
