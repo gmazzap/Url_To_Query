@@ -211,13 +211,11 @@ class UrlToQueryItem {
             || preg_match( "#^{$match}#", urldecode( $request_match ), $matches )
         ) {
             $varmatch = NULL;
-            $vm = preg_match( '/pagename=\$matches\[([0-9]+)\]/', $query, $varmatch );
-            if (
-                $this->resolver->isVerbose()
-                && isset( $vm[1] )
-                && ( ! get_page_by_path( $matches[$vm[1]] ) )
-            ) {
-                return;
+            if ( $this->resolver->isVerbose() && preg_match( '/pagename=\$matches\[([0-9]+)\]/', $query, $varmatch ) ) {
+                $page = get_page_by_path( $matches[ $varmatch[1] ] );
+                if ( ! $page ) {
+                    return;
+                }
             }
             $this->matched_rule = $match;
         }
